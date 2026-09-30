@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-900: #0a0f1c;
+  --color-navy-800: #111827;
+  --color-navy-700: #1f2937;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+}
+
+@layer base {
+  body {
+    @apply bg-navy-900 text-white antialiased font-sans;
+  }
+}
+
+.glass-panel {
+  @apply bg-navy-800/80 backdrop-blur-md border border-white/10 rounded-xl;
+}
