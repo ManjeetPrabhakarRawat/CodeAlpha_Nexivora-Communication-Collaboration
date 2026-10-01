@@ -175,7 +175,7 @@ Alternatively, create a `.env` file inside the `backend` folder.
 ```env
 PORT=5000
 MONGO_URI=mongodb://127.0.0.1:27017/nexivora
-JWT_SECRET=supersecretkey_change_in_production
+JWT_SECRET=your_secure_jwt_secret_here
 CLIENT_URL=http://localhost:5173
 ```
 
