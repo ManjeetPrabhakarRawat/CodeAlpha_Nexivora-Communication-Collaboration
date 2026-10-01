@@ -186,6 +186,12 @@ export function useWebRTC(
   // --------------------------------------------------
 
   const initialize = useCallback(async () => {
+    // Wait until authentication state is restored
+    if (!user?._id) {
+      console.log('Waiting for authenticated user...');
+      return;
+    }
+
     try {
       let stream = localStreamRef.current;
 
@@ -217,6 +223,13 @@ export function useWebRTC(
 
       // Join room
       const joinRoom = () => {
+        if (!user?._id) {
+          console.error(
+            'Cannot join meeting: user is not available'
+          );
+          return;
+        }
+
         socket.emit('join-room', roomId, user);
       };
 
@@ -237,6 +250,13 @@ export function useWebRTC(
       }
 
       const joinRoom = () => {
+        if (!user?._id) {
+          console.error(
+            'Cannot join meeting: user is not available'
+          );
+          return;
+        }
+
         socket.emit('join-room', roomId, user);
       };
 
@@ -254,8 +274,6 @@ export function useWebRTC(
 
   useEffect(() => {
     let isMounted = true;
-
-    initialize();
 
     // ------------------------------------------------
     // Existing participants
@@ -454,7 +472,7 @@ export function useWebRTC(
     };
 
     // ------------------------------------------------
-    // Register socket events
+    // Register socket events BEFORE initialize
     // ------------------------------------------------
 
     socket.on(
@@ -479,6 +497,10 @@ export function useWebRTC(
       'user-disconnected',
       handleUserDisconnected
     );
+
+    // IMPORTANT:
+    // Listeners must be registered before connecting/joining
+    initialize();
 
     // ------------------------------------------------
     // Cleanup
