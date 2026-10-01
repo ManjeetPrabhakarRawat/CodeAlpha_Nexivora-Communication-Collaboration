@@ -6,7 +6,6 @@ import {
   Bell,
   Video,
   Shield,
-  Check,
   Save,
   Mail,
   Camera,
