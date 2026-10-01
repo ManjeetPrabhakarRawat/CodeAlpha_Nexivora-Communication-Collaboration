@@ -36,6 +36,14 @@ const io = new Server(httpServer, {
 });
 setupSockets(io);
 
+// Health check
+app.get('/', (_req, res) => {
+  res.json({
+    success: true,
+    message: 'Nexivora backend is running',
+  });
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/meetings', meetingRoutes);
