@@ -22,14 +22,14 @@ export default function VideoPlayer({
   useEffect(() => {
     const video = videoRef.current;
 
-    if (!video || !stream) return;
+    if (!video || !stream || !isVideoEnabled) return;
 
-    if (video.srcObject !== stream) {
-      video.srcObject = stream;
-    }
+    video.srcObject = stream;
 
-    video.play().catch(() => {});
-  }, [stream]);
+    video.play().catch((error) => {
+      console.error('Video playback failed:', error);
+    });
+  }, [stream, isVideoEnabled]);
 
   return (
     <div className="relative w-full h-full min-h-0 bg-navy-800 rounded-xl overflow-hidden border border-white/5 flex items-center justify-center">

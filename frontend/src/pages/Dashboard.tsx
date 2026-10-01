@@ -229,7 +229,7 @@ export default function Dashboard() {
           </button>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-6 lg:p-10">
+        <div className="flex-1 overflow-y-auto p-6 lg:p-10 pb-24 md:pb-10">
           <div className="max-w-5xl mx-auto">
             {/* Welcome */}
             <header className="mb-10">
@@ -426,6 +426,46 @@ export default function Dashboard() {
               )}
             </div>
           </div>
+          {/* Mobile Navigation */}
+          <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#080d1a] border-t border-white/10">
+            <div className="grid grid-cols-4 h-16">
+              <button
+                type="button"
+                onClick={() => goTo("/dashboard")}
+                className="flex flex-col items-center justify-center gap-1 text-brand-400"
+              >
+                <Video className="w-5 h-5" />
+                <span className="text-[11px]">Meetings</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => goTo("/calendar")}
+                className="flex flex-col items-center justify-center gap-1 text-gray-400"
+              >
+                <Calendar className="w-5 h-5" />
+                <span className="text-[11px]">Calendar</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => goTo("/contacts")}
+                className="flex flex-col items-center justify-center gap-1 text-gray-400"
+              >
+                <Users className="w-5 h-5" />
+                <span className="text-[11px]">Contacts</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => goTo("/settings")}
+                className="flex flex-col items-center justify-center gap-1 text-gray-400"
+              >
+                <Settings className="w-5 h-5" />
+                <span className="text-[11px]">Settings</span>
+              </button>
+            </div>
+          </nav>
         </div>
       </main>
     </div>

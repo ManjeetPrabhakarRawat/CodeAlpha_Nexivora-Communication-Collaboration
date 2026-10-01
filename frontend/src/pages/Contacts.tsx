@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   UserPlus,
@@ -10,15 +10,15 @@ import {
   Mail,
   Trash2,
   UserRound,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuthStore } from "../store/useAuthStore";
 
 interface Contact {
   id: string;
   name: string;
   email: string;
-  status: 'online' | 'offline';
+  status: "online" | "offline";
 }
 
 export default function Contacts() {
@@ -26,14 +26,14 @@ export default function Contacts() {
   const { user } = useAuthStore();
 
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    const saved = localStorage.getItem('nexivora_contacts');
+    const saved = localStorage.getItem("nexivora_contacts");
 
     if (saved) {
       try {
@@ -46,10 +46,7 @@ export default function Contacts() {
 
   const saveContacts = (updated: Contact[]) => {
     setContacts(updated);
-    localStorage.setItem(
-      'nexivora_contacts',
-      JSON.stringify(updated)
-    );
+    localStorage.setItem("nexivora_contacts", JSON.stringify(updated));
   };
 
   const handleAddContact = (e: React.FormEvent) => {
@@ -61,20 +58,18 @@ export default function Contacts() {
       id: crypto.randomUUID(),
       name: name.trim(),
       email: email.trim(),
-      status: 'offline',
+      status: "offline",
     };
 
     saveContacts([...contacts, newContact]);
 
-    setName('');
-    setEmail('');
+    setName("");
+    setEmail("");
     setShowModal(false);
   };
 
   const removeContact = (id: string) => {
-    saveContacts(
-      contacts.filter((contact) => contact.id !== id)
-    );
+    saveContacts(contacts.filter((contact) => contact.id !== id));
   };
 
   const filteredContacts = useMemo(() => {
@@ -85,7 +80,7 @@ export default function Contacts() {
     return contacts.filter(
       (contact) =>
         contact.name.toLowerCase().includes(query) ||
-        contact.email.toLowerCase().includes(query)
+        contact.email.toLowerCase().includes(query),
     );
   }, [contacts, search]);
 
@@ -98,7 +93,7 @@ export default function Contacts() {
             {/* Left */}
             <div className="flex min-w-0 items-center gap-4">
               <button
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate("/dashboard")}
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-gray-400 transition hover:bg-white/5 hover:text-white"
                 title="Back to dashboard"
               >
@@ -106,9 +101,7 @@ export default function Contacts() {
               </button>
 
               <div className="min-w-0">
-                <h1 className="truncate text-2xl font-bold">
-                  Contacts
-                </h1>
+                <h1 className="truncate text-2xl font-bold">Contacts</h1>
 
                 <p className="mt-1 text-sm text-gray-400">
                   Connect with your team
@@ -157,16 +150,16 @@ export default function Contacts() {
                 {/* User */}
                 <div className="flex min-w-0 items-center gap-4">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-600 text-xl font-bold uppercase shadow-lg shadow-brand-600/20">
-                    {user?.name?.charAt(0) || 'U'}
+                    {user?.name?.charAt(0) || "U"}
                   </div>
 
                   <div className="min-w-0">
                     <h3 className="truncate text-lg font-semibold">
-                      {user?.name || 'User'}
+                      {user?.name || "User"}
                     </h3>
 
                     <p className="mt-1 truncate text-sm text-gray-400">
-                      {user?.email || 'No email'}
+                      {user?.email || "No email"}
                     </p>
                   </div>
                 </div>
@@ -184,9 +177,7 @@ export default function Contacts() {
           <section className="w-full">
             <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h2 className="text-xl font-bold">
-                  Your Contacts
-                </h2>
+                <h2 className="text-xl font-bold">Your Contacts</h2>
 
                 <p className="mt-1 text-sm text-gray-400">
                   People you collaborate with
@@ -195,7 +186,7 @@ export default function Contacts() {
 
               <span className="w-fit rounded-full bg-white/5 px-3 py-1 text-sm text-gray-400">
                 {filteredContacts.length} contact
-                {filteredContacts.length !== 1 ? 's' : ''}
+                {filteredContacts.length !== 1 ? "s" : ""}
               </span>
             </div>
 
@@ -211,26 +202,14 @@ export default function Contacts() {
                 </div>
 
                 <h3 className="text-xl font-semibold text-gray-200">
-                  {search
-                    ? 'No contacts found'
-                    : 'No contacts yet'}
+                  {search ? "No contacts found" : "No contacts yet"}
                 </h3>
 
                 <p className="mt-2 max-w-lg text-sm leading-6 text-gray-400">
                   {search
-                    ? 'Try searching with a different name or email.'
-                    : 'Add teammates and collaborators to quickly start meetings with them.'}
+                    ? "Try searching with a different name or email."
+                    : "Add teammates and collaborators to quickly start meetings with them."}
                 </p>
-
-                {!search && (
-                  <button
-                    onClick={() => setShowModal(true)}
-                    className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-3 font-semibold transition hover:bg-brand-500"
-                  >
-                    <UserPlus className="h-5 w-5" />
-                    Add Your First Contact
-                  </button>
-                )}
               </div>
             ) : (
               /* ================= CONTACT GRID ================= */
@@ -257,18 +236,14 @@ export default function Contacts() {
                           <div className="mt-1 flex min-w-0 items-center gap-1.5 text-sm text-gray-400">
                             <Mail className="h-3.5 w-3.5 shrink-0" />
 
-                            <span className="truncate">
-                              {contact.email}
-                            </span>
+                            <span className="truncate">{contact.email}</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Delete */}
                       <button
-                        onClick={() =>
-                          removeContact(contact.id)
-                        }
+                        onClick={() => removeContact(contact.id)}
                         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-500 transition hover:bg-red-500/10 hover:text-red-400"
                         title="Remove contact"
                       >
@@ -280,9 +255,9 @@ export default function Contacts() {
                     <div className="mt-5 flex items-center gap-2">
                       <span
                         className={`h-2.5 w-2.5 rounded-full ${
-                          contact.status === 'online'
-                            ? 'bg-emerald-400 shadow-sm shadow-emerald-400/50'
-                            : 'bg-gray-500'
+                          contact.status === "online"
+                            ? "bg-emerald-400 shadow-sm shadow-emerald-400/50"
+                            : "bg-gray-500"
                         }`}
                       />
 
@@ -293,7 +268,7 @@ export default function Contacts() {
 
                     {/* Start Meeting */}
                     <button
-                      onClick={() => navigate('/dashboard')}
+                      onClick={() => navigate("/dashboard")}
                       className="mt-5 flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg bg-navy-700 px-4 py-2.5 font-medium transition hover:bg-brand-600"
                     >
                       <Video className="h-4 w-4" />
@@ -314,9 +289,7 @@ export default function Contacts() {
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-white/10 p-5 sm:p-6">
               <div>
-                <h2 className="text-xl font-bold">
-                  Add Contact
-                </h2>
+                <h2 className="text-xl font-bold">Add Contact</h2>
 
                 <p className="mt-1 text-sm text-gray-400">
                   Add a teammate or collaborator
@@ -333,15 +306,10 @@ export default function Contacts() {
             </div>
 
             {/* Form */}
-            <form
-              onSubmit={handleAddContact}
-              className="space-y-5 p-5 sm:p-6"
-            >
+            <form onSubmit={handleAddContact} className="space-y-5 p-5 sm:p-6">
               {/* Name */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Name
-                </label>
+                <label className="mb-2 block text-sm font-medium">Name</label>
 
                 <div className="relative">
                   <UserRound className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
@@ -349,9 +317,7 @@ export default function Contacts() {
                   <input
                     type="text"
                     value={name}
-                    onChange={(e) =>
-                      setName(e.target.value)
-                    }
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="John Doe"
                     required
                     autoFocus
@@ -362,9 +328,7 @@ export default function Contacts() {
 
               {/* Email */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Email
-                </label>
+                <label className="mb-2 block text-sm font-medium">Email</label>
 
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
@@ -372,9 +336,7 @@ export default function Contacts() {
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) =>
-                      setEmail(e.target.value)
-                    }
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="john@example.com"
                     required
                     className="w-full rounded-lg border border-white/10 bg-navy-950 px-4 py-3 pl-10 text-sm text-white outline-none transition placeholder:text-gray-600 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"

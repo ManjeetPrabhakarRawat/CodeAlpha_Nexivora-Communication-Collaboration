@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   Calendar as CalendarIcon,
@@ -10,9 +10,9 @@ import {
   Copy,
   CheckCircle2,
   CalendarDays,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { useMeetingStore } from '../store/useMeetingStore';
+import { useMeetingStore } from "../store/useMeetingStore";
 
 interface ScheduledMeeting {
   id: string;
@@ -28,16 +28,16 @@ export default function Calendar() {
   const { createMeeting } = useMeetingStore();
 
   const [showModal, setShowModal] = useState(false);
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [duration, setDuration] = useState('30');
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [duration, setDuration] = useState("30");
   const [meetings, setMeetings] = useState<ScheduledMeeting[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('nexivora_scheduled_meetings');
+    const saved = localStorage.getItem("nexivora_scheduled_meetings");
 
     if (saved) {
       try {
@@ -52,8 +52,8 @@ export default function Calendar() {
     setMeetings(updated);
 
     localStorage.setItem(
-      'nexivora_scheduled_meetings',
-      JSON.stringify(updated)
+      "nexivora_scheduled_meetings",
+      JSON.stringify(updated),
     );
   };
 
@@ -78,13 +78,13 @@ export default function Calendar() {
 
       saveMeetings([...meetings, newMeeting]);
 
-      setTitle('');
-      setDate('');
-      setTime('');
-      setDuration('30');
+      setTitle("");
+      setDate("");
+      setTime("");
+      setDuration("30");
       setShowModal(false);
     } catch (error) {
-      console.error('Failed to schedule meeting:', error);
+      console.error("Failed to schedule meeting:", error);
     } finally {
       setIsCreating(false);
     }
@@ -107,17 +107,17 @@ export default function Calendar() {
         setCopiedId(null);
       }, 2000);
     } catch (error) {
-      console.error('Failed to copy meeting link:', error);
+      console.error("Failed to copy meeting link:", error);
     }
   };
 
   const today = new Date();
 
-  const formattedToday = today.toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
+  const formattedToday = today.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
   });
 
   return (
@@ -129,7 +129,7 @@ export default function Calendar() {
             {/* Left */}
             <div className="flex min-w-0 items-center gap-4">
               <button
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate("/dashboard")}
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-gray-400 transition hover:bg-white/5 hover:text-white"
                 title="Back to dashboard"
               >
@@ -137,9 +137,7 @@ export default function Calendar() {
               </button>
 
               <div className="min-w-0">
-                <h1 className="truncate text-2xl font-bold">
-                  Calendar
-                </h1>
+                <h1 className="truncate text-2xl font-bold">Calendar</h1>
 
                 <p className="mt-1 text-sm text-gray-400">
                   Manage your meetings and schedule
@@ -170,9 +168,7 @@ export default function Calendar() {
               </div>
 
               <div className="min-w-0">
-                <p className="text-sm text-gray-400">
-                  Today
-                </p>
+                <p className="text-sm text-gray-400">Today</p>
 
                 <h2 className="mt-1 truncate text-lg font-bold sm:text-xl">
                   {formattedToday}
@@ -185,9 +181,7 @@ export default function Calendar() {
           <section className="w-full">
             <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h2 className="text-xl font-bold">
-                  Upcoming Meetings
-                </h2>
+                <h2 className="text-xl font-bold">Upcoming Meetings</h2>
 
                 <p className="mt-1 text-sm text-gray-400">
                   Your scheduled meetings
@@ -196,7 +190,7 @@ export default function Calendar() {
 
               <span className="w-fit rounded-full bg-white/5 px-3 py-1 text-sm text-gray-400">
                 {meetings.length} meeting
-                {meetings.length !== 1 ? 's' : ''}
+                {meetings.length !== 1 ? "s" : ""}
               </span>
             </div>
 
@@ -212,17 +206,9 @@ export default function Calendar() {
                 </h3>
 
                 <p className="mt-2 max-w-md text-sm leading-6 text-gray-400">
-                  Your upcoming meetings will appear here when
-                  you schedule them.
+                  Your upcoming meetings will appear here when you schedule
+                  them.
                 </p>
-
-                <button
-                  onClick={() => setShowModal(true)}
-                  className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-3 font-semibold transition hover:bg-brand-500"
-                >
-                  <Video className="h-5 w-5" />
-                  Create a Meeting
-                </button>
               </div>
             ) : (
               /* IMPORTANT:
@@ -251,7 +237,7 @@ export default function Calendar() {
                               <CalendarIcon className="h-4 w-4 shrink-0" />
 
                               {new Date(
-                                `${meeting.date}T00:00:00`
+                                `${meeting.date}T00:00:00`,
                               ).toLocaleDateString()}
                             </span>
 
@@ -261,18 +247,14 @@ export default function Calendar() {
                               {meeting.time}
                             </span>
 
-                            <span>
-                              {meeting.duration} min
-                            </span>
+                            <span>{meeting.duration} min</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Delete */}
                       <button
-                        onClick={() =>
-                          handleDeleteMeeting(meeting.id)
-                        }
+                        onClick={() => handleDeleteMeeting(meeting.id)}
                         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-500 transition hover:bg-red-500/10 hover:text-red-400"
                         title="Remove meeting"
                       >
@@ -282,9 +264,7 @@ export default function Calendar() {
 
                     {/* Room ID */}
                     <div className="mt-5 rounded-lg border border-white/5 bg-navy-950 p-3">
-                      <p className="mb-1 text-xs text-gray-500">
-                        Room ID
-                      </p>
+                      <p className="mb-1 text-xs text-gray-500">Room ID</p>
 
                       <p className="break-all text-sm text-gray-300">
                         {meeting.roomId}
@@ -294,11 +274,7 @@ export default function Calendar() {
                     {/* Buttons */}
                     <div className="mt-4 flex flex-col gap-3 sm:flex-row">
                       <button
-                        onClick={() =>
-                          navigate(
-                            `/meeting/${meeting.roomId}`
-                          )
-                        }
+                        onClick={() => navigate(`/meeting/${meeting.roomId}`)}
                         className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5 font-medium transition hover:bg-brand-500"
                       >
                         <Video className="h-4 w-4" />
@@ -307,10 +283,7 @@ export default function Calendar() {
 
                       <button
                         onClick={() =>
-                          copyMeetingLink(
-                            meeting.roomId,
-                            meeting.id
-                          )
+                          copyMeetingLink(meeting.roomId, meeting.id)
                         }
                         className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-navy-700 px-4 py-2.5 font-medium transition hover:bg-navy-600"
                       >
@@ -342,9 +315,7 @@ export default function Calendar() {
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-white/10 p-5 sm:p-6">
               <div>
-                <h2 className="text-xl font-bold">
-                  Schedule Meeting
-                </h2>
+                <h2 className="text-xl font-bold">Schedule Meeting</h2>
 
                 <p className="mt-1 text-sm text-gray-400">
                   Create a meeting for your team
@@ -374,9 +345,7 @@ export default function Calendar() {
                 <input
                   type="text"
                   value={title}
-                  onChange={(e) =>
-                    setTitle(e.target.value)
-                  }
+                  onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Team Standup"
                   required
                   autoFocus
@@ -387,32 +356,24 @@ export default function Calendar() {
               {/* Date + Time */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-sm font-medium">
-                    Date
-                  </label>
+                  <label className="mb-2 block text-sm font-medium">Date</label>
 
                   <input
                     type="date"
                     value={date}
-                    onChange={(e) =>
-                      setDate(e.target.value)
-                    }
+                    onChange={(e) => setDate(e.target.value)}
                     required
                     className="w-full rounded-lg border border-white/10 bg-navy-950 px-4 py-3 text-sm text-white outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium">
-                    Time
-                  </label>
+                  <label className="mb-2 block text-sm font-medium">Time</label>
 
                   <input
                     type="time"
                     value={time}
-                    onChange={(e) =>
-                      setTime(e.target.value)
-                    }
+                    onChange={(e) => setTime(e.target.value)}
                     required
                     className="w-full rounded-lg border border-white/10 bg-navy-950 px-4 py-3 text-sm text-white outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
                   />
@@ -427,34 +388,20 @@ export default function Calendar() {
 
                 <select
                   value={duration}
-                  onChange={(e) =>
-                    setDuration(e.target.value)
-                  }
+                  onChange={(e) => setDuration(e.target.value)}
                   className="w-full rounded-lg border border-white/10 bg-navy-950 px-4 py-3 text-sm text-white outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
                 >
-                  <option value="15">
-                    15 minutes
-                  </option>
+                  <option value="15">15 minutes</option>
 
-                  <option value="30">
-                    30 minutes
-                  </option>
+                  <option value="30">30 minutes</option>
 
-                  <option value="45">
-                    45 minutes
-                  </option>
+                  <option value="45">45 minutes</option>
 
-                  <option value="60">
-                    1 hour
-                  </option>
+                  <option value="60">1 hour</option>
 
-                  <option value="90">
-                    1.5 hours
-                  </option>
+                  <option value="90">1.5 hours</option>
 
-                  <option value="120">
-                    2 hours
-                  </option>
+                  <option value="120">2 hours</option>
                 </select>
               </div>
 
@@ -470,17 +417,10 @@ export default function Calendar() {
 
                 <button
                   type="submit"
-                  disabled={
-                    isCreating ||
-                    !title.trim() ||
-                    !date ||
-                    !time
-                  }
+                  disabled={isCreating || !title.trim() || !date || !time}
                   className="flex-1 rounded-lg bg-brand-600 px-4 py-3 font-semibold transition hover:bg-brand-500 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {isCreating
-                    ? 'Creating...'
-                    : 'Schedule Meeting'}
+                  {isCreating ? "Creating..." : "Schedule Meeting"}
                 </button>
               </div>
             </form>
